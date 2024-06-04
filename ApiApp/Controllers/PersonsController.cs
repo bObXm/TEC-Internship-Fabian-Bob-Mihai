@@ -64,7 +64,30 @@ namespace Internship.Controllers
             if (ModelState.IsValid)
             {
                 var db = new APIDbContext();
+
+                var positionExists = db.Positions.Any(p => p.PositionId == person.PositionId);
+                if (!positionExists)
+                {
+                    ModelState.AddModelError("PositionId", "Invalid PositionId. Position does not exist.");
+                    return BadRequest(ModelState);
+                }
+
+                
+                var salaryExists = db.Salaries.Any(s => s.SalaryId == person.SalaryId);
+                if (!salaryExists)
+                {
+                    ModelState.AddModelError("SalaryId", "Invalid SalaryId. Salary does not exist.");
+                    return BadRequest(ModelState);
+                }
+
                 Person updateperson = db.Persons.Find(person.Id);
+
+                if (updateperson == null)
+                {
+                    _logger.LogWarning($"Person with ID {person.Id} not found.");
+                    return NotFound("Person not found");
+                }
+
                 updateperson.Address = person.Address;
                 updateperson.Age = person.Age;
                 updateperson.Email = person.Email;
@@ -75,8 +98,9 @@ namespace Internship.Controllers
                 db.SaveChanges();
                 return NoContent();
             }
-            else
+            else{
                 return BadRequest();
+            }
         }
 
         [HttpDelete("{id}")]

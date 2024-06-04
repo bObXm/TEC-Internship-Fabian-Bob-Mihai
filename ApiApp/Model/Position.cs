@@ -16,6 +16,6 @@ namespace Internship.Model
         public virtual ICollection<Person> Persons { get;set; }
         [ForeignKey("Department")]
         public int DepartmentId {  get; set; }
-        public Department Department { get; set; }
+        public Department? Department { get; set; }
     }
 }
