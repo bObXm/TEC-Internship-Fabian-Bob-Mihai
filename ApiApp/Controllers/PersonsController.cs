@@ -10,6 +10,12 @@ namespace Internship.Controllers
     [ApiController]
     public class PersonsController : ControllerBase
     {
+        private readonly ILogger<PersonsController> _logger;
+        public PersonsController(ILogger<PersonsController> logger)
+        {
+            this._logger = logger;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -36,6 +42,7 @@ namespace Internship.Controllers
                 return Ok(person);
 
         }
+
         [HttpPost]
         public IActionResult Post(Person person)
         {
@@ -49,8 +56,9 @@ namespace Internship.Controllers
             else
                 return BadRequest();
         }
+
         [HttpPut]
-        public IActionResult UpdatePerson(Person person)
+        public IActionResult UpdatePerson([FromBody] Person person)
         {
 
             if (ModelState.IsValid)
@@ -69,6 +77,28 @@ namespace Internship.Controllers
             }
             else
                 return BadRequest();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<string>> DeletePerson(int id)
+        {
+            try
+            {
+                var db = new APIDbContext();
+                var person = await db.Persons.FindAsync(id);
+                if (person == null)
+                {
+                    return NotFound("Person not found");
+                }
+                db.Persons.Remove(person);
+                await db.SaveChangesAsync();
+                return Ok("User deleted successfully");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error deleting person");
+                return StatusCode(500, "An error occurred while deleting the user");
+            }
         }
     }
 }
