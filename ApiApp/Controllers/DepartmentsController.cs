@@ -8,6 +8,13 @@ namespace Internship.Controllers
     [ApiController]
     public class DepartmentsController : ControllerBase
     {
+        private readonly ILogger<DepartmentsController> _logger;
+
+        public DepartmentsController(ILogger<DepartmentsController> logger)
+        {
+            _logger = logger;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -55,6 +62,33 @@ namespace Internship.Controllers
             }
             else
                 return BadRequest();
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> Delete(int Id)
+        {
+            var db = new APIDbContext();
+            try
+            {
+                var department = await db.Departments.FindAsync(Id);
+                if (department == null)
+                {
+                    _logger.LogWarning($"Department with Id = {Id} not found.");
+                    return NotFound();
+                }
+
+                db.Departments.Remove(department);
+                await db.SaveChangesAsync();
+
+                _logger.LogInformation($"Department with Id = {Id} deleted successfully.");
+                return NoContent();
+            }
+
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error deleting department with Id = {Id}");
+                return StatusCode(500, "An error occurred while deleting the department.");
+            }
         }
     }
 }
