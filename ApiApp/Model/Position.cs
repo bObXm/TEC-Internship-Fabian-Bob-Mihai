@@ -9,6 +9,7 @@ namespace Internship.Model
         {
             Persons = new HashSet<Person>();
         }
+
         [Key]
         public int PositionId { get; set; }
         [Required]

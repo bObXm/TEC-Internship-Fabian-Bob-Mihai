@@ -40,7 +40,6 @@ namespace Internship.Controllers
                 return NotFound();
             else
                 return Ok(person);
-
         }
 
         [HttpPost]
@@ -54,13 +53,14 @@ namespace Internship.Controllers
                 return Created("", person);
             }
             else
+            {
                 return BadRequest();
+            }
         }
 
         [HttpPut]
         public IActionResult UpdatePerson([FromBody] Person person)
         {
-
             if (ModelState.IsValid)
             {
                 var db = new APIDbContext();
@@ -72,7 +72,7 @@ namespace Internship.Controllers
                     return BadRequest(ModelState);
                 }
 
-                
+
                 var salaryExists = db.Salaries.Any(s => s.SalaryId == person.SalaryId);
                 if (!salaryExists)
                 {
@@ -98,7 +98,8 @@ namespace Internship.Controllers
                 db.SaveChanges();
                 return NoContent();
             }
-            else{
+            else
+            {
                 return BadRequest();
             }
         }

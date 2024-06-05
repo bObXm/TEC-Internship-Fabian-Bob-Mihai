@@ -16,43 +16,47 @@ namespace WebApp.Controllers
     {
         //HINT task 8 start
 
-/*        private readonly IConfiguration _config;
-        private readonly string _api;
-        public PersonController(IConfiguration config)
-        {
-            _config = config;
-            _api = _config.GetValue<string>("");
-        }*/
+        /*        private readonly IConfiguration _config;
+                private readonly string _api;
+                public PersonController(IConfiguration config)
+                {
+                    _config = config;
+                    _api = _config.GetValue<string>("");
+                }*/
 
         //HINT task 8 end
         public async Task<IActionResult> Index()
         {
             HttpClient client = new HttpClient();
             HttpResponseMessage message = await client.GetAsync("http://localhost:5229/api/persons");
-            if(message.IsSuccessStatusCode)
+            if (message.IsSuccessStatusCode)
             {
                 var jstring = await message.Content.ReadAsStringAsync();
                 List<PersonInformation> list = JsonConvert.DeserializeObject<List<PersonInformation>>(jstring);
                 return View(list);
             }
             else
-            return View(new List<PersonInformation>());
+            {
+                return View(new List<PersonInformation>());
+            }
+
         }
         public IActionResult Add()
         {
             Person person = new Person();
             return View(person);
         }
+
         [HttpPost]
         public async Task<IActionResult> Add(Person person)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 HttpClient client = new HttpClient();
                 var jsonPerson = JsonConvert.SerializeObject(person);
-                StringContent content = new StringContent(jsonPerson,Encoding.UTF8,"application/json");
+                StringContent content = new StringContent(jsonPerson, Encoding.UTF8, "application/json");
                 HttpResponseMessage message = await client.PostAsync("http://localhost:5229/api/persons", content);
-                if(message.IsSuccessStatusCode)
+                if (message.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
@@ -61,7 +65,6 @@ namespace WebApp.Controllers
                     ModelState.AddModelError("", "There is an API Error");
                     return View(person);
                 }
-
             }
             else
             {
@@ -82,6 +85,7 @@ namespace WebApp.Controllers
             else
                 return RedirectToAction("Add");
         }
+
         [HttpPost]
         public async Task<IActionResult> Update(Person person)
         {
@@ -91,7 +95,7 @@ namespace WebApp.Controllers
                 var jsonperson = JsonConvert.SerializeObject(person);
                 StringContent content = new StringContent(jsonperson, Encoding.UTF8, "application/json");
                 HttpResponseMessage message = await client.PutAsync("http://localhost:5229/api/persons", content);
-                if(message.IsSuccessStatusCode)
+                if (message.IsSuccessStatusCode)
                 {
                     return RedirectToAction("Index");
                 }
@@ -101,9 +105,9 @@ namespace WebApp.Controllers
                 }
             }
             else
+            {
                 return View(person);
+            }
         }
-     
-
     }
 }
