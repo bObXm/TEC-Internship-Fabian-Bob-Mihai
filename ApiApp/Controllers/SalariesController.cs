@@ -11,6 +11,12 @@ namespace Internship.Controllers
     [ApiController]
     public class SalariesController : ControllerBase
     {
+        private readonly ILogger<SalariesController> _logger;
+        public SalariesController(ILogger<SalariesController> logger)
+        {
+            this._logger = logger;
+        }
+
         [HttpGet]
         public IActionResult Get()
         {
@@ -31,6 +37,26 @@ namespace Internship.Controllers
                 db.Salaries.Remove(salary);
                 db.SaveChanges();
                 return NoContent();
+            }
+        }
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Salary salary)
+        {
+            if (salary == null)
+            {
+                return BadRequest("Add a salary.");
+            }
+            try
+            {
+                var db = new APIDbContext();
+                db.Salaries.Add(salary);
+                db.SaveChanges();
+                return StatusCode(201, salary);
+            }catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error adding a salary");
+                return StatusCode(500, "An error occurred while saving the salary.");
             }
         }
     }
