@@ -68,15 +68,12 @@ namespace Internship.Controllers
                 var positionExists = db.Positions.Any(p => p.PositionId == person.PositionId);
                 if (!positionExists)
                 {
-                    ModelState.AddModelError("PositionId", "Invalid PositionId. Position does not exist.");
                     return BadRequest(ModelState);
                 }
-
 
                 var salaryExists = db.Salaries.Any(s => s.SalaryId == person.SalaryId);
                 if (!salaryExists)
                 {
-                    ModelState.AddModelError("SalaryId", "Invalid SalaryId. Salary does not exist.");
                     return BadRequest(ModelState);
                 }
 
