@@ -21,5 +21,6 @@ namespace WebApp.Models
         public string Address { get; set; }
         public int PositionId { get; set; }
         public int SalaryId { get; set; }
+
     }
 }
