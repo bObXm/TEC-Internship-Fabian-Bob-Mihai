@@ -1,4 +1,5 @@
 ﻿using Internship.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
@@ -17,7 +18,7 @@ namespace Internship.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public async Task<IActionResult> Add([FromBody] PersonDetail personDetail)
         {
             if (personDetail == null)
@@ -39,7 +40,7 @@ namespace Internship.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}"), Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -69,7 +70,7 @@ namespace Internship.Controllers
             }
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id}"), Authorize]
         public async Task<IActionResult> Update(int id, [FromBody] PersonDetail personDetail)
         {
             if (personDetail == null || personDetail.Id != id)

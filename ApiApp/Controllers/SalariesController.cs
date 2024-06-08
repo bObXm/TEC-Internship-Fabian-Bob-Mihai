@@ -1,4 +1,5 @@
 ﻿using Internship.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Internship.Controllers
             this._logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult Get()
         {
             var db = new APIDbContext();
@@ -25,7 +26,7 @@ namespace Internship.Controllers
             return Ok(list);
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{Id}"), Authorize]
         public IActionResult Delete(int Id)
         {
             var db = new APIDbContext();
@@ -40,7 +41,7 @@ namespace Internship.Controllers
             }
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult Post([FromBody] Salary salary)
         {
             if (salary == null)

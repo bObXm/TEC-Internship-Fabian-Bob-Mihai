@@ -18,177 +18,177 @@ namespace ApiApp.Migrations
             modelBuilder.HasAnnotation("ProductVersion", "8.0.5");
 
             modelBuilder.Entity("Internship.Model.Department", b =>
-                {
-                    b.Property<int>("DepartmentId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("DepartmentId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("DepartmentName")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.HasKey("DepartmentId");
+                b.HasKey("DepartmentId");
 
-                    b.ToTable("Departments");
-                });
+                b.ToTable("Departments");
+            });
 
             modelBuilder.Entity("Internship.Model.Person", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("Address")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.Property<int>("Age")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("Age")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("Email")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.Property<int>("PositionId")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("PositionId")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("SalaryId")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("SalaryId")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Surname")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("Surname")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("PositionId");
+                b.HasIndex("PositionId");
 
-                    b.HasIndex("SalaryId");
+                b.HasIndex("SalaryId");
 
-                    b.ToTable("Persons");
-                });
+                b.ToTable("Persons");
+            });
 
             modelBuilder.Entity("Internship.Model.PersonDetail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("Id")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("BirthDay")
-                        .HasColumnType("TEXT");
+                b.Property<DateTime>("BirthDay")
+                    .HasColumnType("TEXT");
 
-                    b.Property<string>("PersonCity")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("PersonCity")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("PersonId")
+                    .HasColumnType("INTEGER");
 
-                    b.HasKey("Id");
+                b.HasKey("Id");
 
-                    b.HasIndex("PersonId");
+                b.HasIndex("PersonId");
 
-                    b.ToTable("PersonDetails");
-                });
+                b.ToTable("PersonDetails");
+            });
 
             modelBuilder.Entity("Internship.Model.Position", b =>
-                {
-                    b.Property<int>("PositionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("PositionId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("DepartmentId")
+                    .HasColumnType("INTEGER");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                b.Property<string>("Name")
+                    .IsRequired()
+                    .HasColumnType("TEXT");
 
-                    b.HasKey("PositionId");
+                b.HasKey("PositionId");
 
-                    b.HasIndex("DepartmentId");
+                b.HasIndex("DepartmentId");
 
-                    b.ToTable("Positions");
-                });
+                b.ToTable("Positions");
+            });
 
             modelBuilder.Entity("Internship.Model.Salary", b =>
-                {
-                    b.Property<int>("SalaryId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+            {
+                b.Property<int>("SalaryId")
+                    .ValueGeneratedOnAdd()
+                    .HasColumnType("INTEGER");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("INTEGER");
+                b.Property<int>("Amount")
+                    .HasColumnType("INTEGER");
 
-                    b.HasKey("SalaryId");
+                b.HasKey("SalaryId");
 
-                    b.ToTable("Salaries");
-                });
+                b.ToTable("Salaries");
+            });
 
             modelBuilder.Entity("Internship.Model.Person", b =>
-                {
-                    b.HasOne("Internship.Model.Position", "Position")
-                        .WithMany("Persons")
-                        .HasForeignKey("PositionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Internship.Model.Position", "Position")
+                    .WithMany("Persons")
+                    .HasForeignKey("PositionId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.HasOne("Internship.Model.Salary", "Salary")
-                        .WithMany("Persons")
-                        .HasForeignKey("SalaryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                b.HasOne("Internship.Model.Salary", "Salary")
+                    .WithMany("Persons")
+                    .HasForeignKey("SalaryId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Position");
+                b.Navigation("Position");
 
-                    b.Navigation("Salary");
-                });
+                b.Navigation("Salary");
+            });
 
             modelBuilder.Entity("Internship.Model.PersonDetail", b =>
-                {
-                    b.HasOne("Internship.Model.Person", "Person")
-                        .WithMany("PersonDetails")
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Internship.Model.Person", "Person")
+                    .WithMany("PersonDetails")
+                    .HasForeignKey("PersonId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Person");
-                });
+                b.Navigation("Person");
+            });
 
             modelBuilder.Entity("Internship.Model.Position", b =>
-                {
-                    b.HasOne("Internship.Model.Department", "Department")
-                        .WithMany("Positions")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            {
+                b.HasOne("Internship.Model.Department", "Department")
+                    .WithMany("Positions")
+                    .HasForeignKey("DepartmentId")
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .IsRequired();
 
-                    b.Navigation("Department");
-                });
+                b.Navigation("Department");
+            });
 
             modelBuilder.Entity("Internship.Model.Department", b =>
-                {
-                    b.Navigation("Positions");
-                });
+            {
+                b.Navigation("Positions");
+            });
 
             modelBuilder.Entity("Internship.Model.Person", b =>
-                {
-                    b.Navigation("PersonDetails");
-                });
+            {
+                b.Navigation("PersonDetails");
+            });
 
             modelBuilder.Entity("Internship.Model.Position", b =>
-                {
-                    b.Navigation("Persons");
-                });
+            {
+                b.Navigation("Persons");
+            });
 
             modelBuilder.Entity("Internship.Model.Salary", b =>
-                {
-                    b.Navigation("Persons");
-                });
+            {
+                b.Navigation("Persons");
+            });
 #pragma warning restore 612, 618
         }
     }

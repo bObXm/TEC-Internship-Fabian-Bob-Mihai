@@ -1,5 +1,6 @@
 ﻿using Internship.Model;
 using Internship.ObjectModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Data.Entity;
@@ -16,7 +17,7 @@ namespace Internship.Controllers
             this._logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult Get()
         {
             var db = new APIDbContext();
@@ -31,7 +32,7 @@ namespace Internship.Controllers
             return Ok(list);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}"), Authorize]
         public IActionResult Get(int Id)
         {
             var db = new APIDbContext();
@@ -42,7 +43,7 @@ namespace Internship.Controllers
                 return Ok(person);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult Post(Person person)
         {
             if (ModelState.IsValid)
@@ -58,7 +59,7 @@ namespace Internship.Controllers
             }
         }
 
-        [HttpPut]
+        [HttpPut, Authorize]
         public IActionResult UpdatePerson([FromBody] Person person)
         {
             if (ModelState.IsValid)
@@ -101,7 +102,7 @@ namespace Internship.Controllers
             }
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}"), Authorize]
         public async Task<ActionResult<string>> DeletePerson(int id)
         {
             try

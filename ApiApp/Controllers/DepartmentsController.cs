@@ -1,4 +1,5 @@
 ﻿using Internship.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Internship.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet, Authorize]
         public IActionResult Get()
         {
             var db = new APIDbContext();
@@ -23,7 +24,7 @@ namespace Internship.Controllers
             return Ok(list);
         }
 
-        [HttpGet("{Id}")]
+        [HttpGet("{Id}"), Authorize]
         public IActionResult Get(int Id)
         {
             var db = new APIDbContext();
@@ -34,7 +35,7 @@ namespace Internship.Controllers
                 return Ok(department);
         }
 
-        [HttpPost]
+        [HttpPost, Authorize]
         public IActionResult AddDepartment(Department department)
         {
             if (ModelState.IsValid)
@@ -48,7 +49,7 @@ namespace Internship.Controllers
                 return BadRequest();
 
         }
-        [HttpPut]
+        [HttpPut, Authorize]
         public IActionResult UpdateDepartment(Department department)
         {
 
@@ -64,7 +65,7 @@ namespace Internship.Controllers
                 return BadRequest();
         }
 
-        [HttpDelete("{Id}")]
+        [HttpDelete("{Id}"), Authorize]
         public async Task<IActionResult> Delete(int Id)
         {
             var db = new APIDbContext();
